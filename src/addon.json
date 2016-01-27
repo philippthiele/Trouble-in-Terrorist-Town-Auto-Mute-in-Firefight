@@ -1,0 +1,11 @@
+{
+	"title"		:	"TTT Auto Mute in Firefight",
+	"type"		:	"ServerContent",
+	"tags"		:	[ "fun"],
+	"ignore"	:
+	[
+		"*.psd",
+		"*.vcproj",
+		"*.svn*"
+	]
+}

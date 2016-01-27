@@ -1,13 +1,17 @@
 local function MutePlayer(data)
   local playerToBeMuted = data:ReadEntity()
-  playerToBeMuted:SetMuted(true)
-  if LocalPlayer() == playerToBeMuted then
-    ourMat = Material( "../gamemodes/terrortown/content/materials/vgui/ttt/glyph_muted" )
+
+  if not playerToBeMuted:IsMuted() then
+    playerToBeMuted:SetMuted(true)
+    if LocalPlayer() == playerToBeMuted then
+      ourMat = Material( "../gamemodes/terrortown/content/materials/vgui/ttt/glyph_muted" )
+    end
+    timer.Create( "MuteTimer" .. tostring(os.time()), 15, 1, function()
+       playerToBeMuted:SetMuted(false)
+       ourMat = nil
+     end )
   end
-  timer.Create( "MuteTimer", 15, 1, function()
-     playerToBeMuted:SetMuted(false)
-     ourMat = nil
-   end )
+
 end
 
 usermessage.Hook( "Mute Player", MutePlayer )
