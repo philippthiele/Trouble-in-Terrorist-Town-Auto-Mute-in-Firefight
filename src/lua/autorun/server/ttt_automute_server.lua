@@ -9,4 +9,6 @@ end
 
 hook.Add( "PlayerHurt", "PlayerGetsHurt", PlayerGetsHurt )
 
- 
+if SERVER then
+   resource.AddFile("materials/VGUI/ttt/glyph_muted.vmt")
+end

@@ -5,11 +5,11 @@ local function MutePlayer(data)
 		if not playerToBeMuted:IsMuted() then
 
 		if LocalPlayer() == playerToBeMuted then
-			ourMat = Material( "vgui/ttt/glyph_muted" )
+			ourMat = Material( "VGUI/ttt/glyph_muted" )
 				if not timer.Exists("MuteTimer") then
 				timer.Create("MuteTimer", 15, 1, function()
 					ourMat = nil
-				end )		 
+				end )
 			end
 		else
 		  playerToBeMuted:SetMuted(true)
@@ -20,7 +20,7 @@ local function MutePlayer(data)
 		table.insert(allTimers, entry)
 		timer.Create(id, 15, 1, function()
 			if playerToBeMuted:IsMuted() and LocalPlayer() ~= playerToBeMuted then
-			   playerToBeMuted:SetMuted(false)	
+			   playerToBeMuted:SetMuted(false)
 			   table.remove(allTimers,1)
 			end
 		 end )
@@ -28,18 +28,17 @@ local function MutePlayer(data)
 end
 
 function TTTEndRound(result)
-	for _,entry in ipairs(allTimers) do
-		timer.Adjust(entry[1], 0,1, function()
-			if entry[2]:IsMuted() and LocalPlayer() ~= entry[2] then
-			   entry[2]:SetMuted(false)	
-			   ourMat = nil			   
-			end
-		 end)
+	for _,player in ipairs(player.GetAll()) do
+		if player:IsMuted() then
+			 player:SetMuted(false)
+			 ourMat = nil
+		end
 	end
 end
 
 
 hook.Add( "TTTEndRound", "EndRoundDeleteTimers", TTTEndRound )
+hook.Add( "TTTPrepareRound", "EndRoundDeleteTimers", TTTEndRound )
 
 usermessage.Hook( "Mute Player", MutePlayer )
 
